@@ -17,4 +17,5 @@ class BDBKSpider(scrapy.Spider):
             desc = sel.xpath('text()').extract()
             for info in desc:
                 print info
+                
             
