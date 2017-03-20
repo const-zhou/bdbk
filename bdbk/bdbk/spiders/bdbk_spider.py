@@ -12,10 +12,17 @@ class BDBKSpider(scrapy.Spider):
 
     def parse(self, response):
         for sel in response.xpath("//div[@class='lemma-summary']/div[@class='para']"):
-            title = sel.xpath('a/text()').extract()
-            # link = sel.xpath('a/@href').extract()
-            desc = sel.xpath('text()').extract()
-            for info in desc:
-                print info
+            title = sel.xpath('text()|a/text()|b/text()|i/text()').extract()
+            desc = ''
+            for item in title:
+                desc += item.strip('\n')
+            print desc
+
                 
-            
+            # link = sel.xpath('a/@href').extract()
+            # desc = sel.xpath('text()').extract()
+            # print desc
+            # for gg in sel.xpath("*"):
+            #     info = gg.xpath('text()').extract()
+            #     for xx in info:
+            #         print xx
