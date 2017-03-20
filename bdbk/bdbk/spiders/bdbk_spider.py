@@ -6,12 +6,15 @@ class BDBKSpider(scrapy.Spider):
     name = "bdbk"
     # allowed_domains = ["dmoz.org"]
     start_urls = [
-        "http://baike.baidu.com/item/苹果/5670"
+        "http://baike.baidu.com/item/苹果/5670",
+        "http://baike.baidu.com/item/橘子/71287?sefr=cr",
+        "http://baike.baidu.com/item/提子/53914?sefr=cr"
         # "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
     ]
 
     def parse(self, response):
-        for sel in response.xpath("//div[@class='lemma-summary']/div[@class='para']"):
+        # for sel in response.xpath("//div[@class='lemma-summary']/div[@class='para']"):
+        for sel in response.xpath("//div[@class='para']"):
             title = sel.xpath('text()|a/text()|b/text()|i/text()').extract()
             desc = ''
             for item in title:
