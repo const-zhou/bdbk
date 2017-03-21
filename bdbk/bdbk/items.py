@@ -11,7 +11,6 @@ import scrapy
 class BdbkItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    title = scrapy.Field()
-    link = scrapy.Field()
-    desc = scrapy.Field()
+    section = scrapy.Field()
+    content = scrapy.Field()
     pass
