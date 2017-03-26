@@ -20,14 +20,14 @@ class SectionItem(scrapy.Item):
 class BdbkItem():
     # define the fields for your item here like:
     name = str()
-    discription = str()
+    description = str()
     section = []
     image = str
 
     def convert2Diction(self):
         dic = {}
         dic["name"] = self.name
-        dic["discription"] = self.discription
+        dic["description"] = self.description
         itemlist = []
         for item in self.section:
             if isinstance(item, SectionItem):

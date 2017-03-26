@@ -2,16 +2,21 @@
 
 import scrapy
 import json
+import urllib2
 from bdbk.items import BdbkItem, SectionItem
+
 
 class BDBKSpider(scrapy.Spider):
     name = "bdbk"
     # allowed_domains = ["dmoz.org"]
     start_urls = [
         "http://baike.baidu.com/item/苹果/5670",
-        # "http://baike.baidu.com/item/橘子/71287?sefr=cr",
-        # "http://baike.baidu.com/item/提子/53914?sefr=cr"
-        # "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
+        "http://baike.baidu.com/item/橘子/71287?sefr=cr",
+        "http://baike.baidu.com/item/提子/53914?sefr=cr"
+        "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/",
+        "http://baike.baidu.com/item/香蕉/150475?sefr=cr",
+        "http://baike.baidu.com/item/火龙果/240065?sefr=cr",
+        "http://baike.baidu.com/item/丑柑?sefr=cr"
     ]
 
     def parse(self, response):
@@ -60,14 +65,18 @@ class BDBKSpider(scrapy.Spider):
                     desc += item.strip('\n')
             content = desc
             entity.name = name
-            entity.discription = content
+            entity.description = content
             print name
             print content
         
         # print entity.convert2Diction()
-        # json_str = json.dump(entity.convert2Diction())
+        json_str = json.dumps(entity.convert2Diction())
         with open('data.json', 'w') as xxf:
             json.dump(entity.convert2Diction(), xxf)
+
+        headers_bdbk = {'Content-Type': 'application/json'}
+        request_bdbk = urllib2.Request(url = 'http://127.0.0.1:8000/addfruit', data=json_str, headers=headers_bdbk)
+        response = urllib2.urlopen(request_bdbk)
         # yield entity
 
             # link = sel.xpath('a/@href').extract()
