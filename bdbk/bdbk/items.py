@@ -14,6 +14,10 @@ class SectionItem(scrapy.Item):
 
     def convert2Diction(self):
         dic = {"title":self['title'], "content":self['content']}
+        # if len(self['image_urls']):
+        if 'image_urls' in self: 
+            dic = {"title":self['title'], "content":self['content'], "image_urls":self['image_urls']}
+            return dic
         return dic
     pass
 

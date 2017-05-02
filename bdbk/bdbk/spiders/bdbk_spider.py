@@ -60,13 +60,14 @@ class BDBKSpider(scrapy.Spider):
                 g_content = ''
                 
             
-            sectionItem['image_urls'] = sel.xpath("a[@class='image-link']/img/@src")
+            # sectionItem['image_urls'] = sel.xpath("img/@src")
             # print sectionItem['image_urls']
 
             myimg = sel.xpath("img/@src").extract()
             if len(myimg):  
                 print "###img:  " 
-                print myimg
+                print myimg[0]
+                sectionItem['image_urls'] = myimg[0]
 
             content = sel.xpath("text()|a[@class!='edit-icon j-edit-link']/text()|b/text()|i/text()").extract()
             # print title
@@ -95,8 +96,8 @@ class BDBKSpider(scrapy.Spider):
 
         headers_bdbk = {'Content-Type': 'application/json'}
         request_bdbk = urllib2.Request(url = 'http://127.0.0.1:8000/addfruit', data=json_str, headers=headers_bdbk)
-        # response = urllib2.urlopen(request_bdbk)
-        # yield entity
+        response = urllib2.urlopen(request_bdbk)
+        yield entity
 
             # link = sel.xpath('a/@href').extract()
             # desc = sel.xpath('text()').extract()
