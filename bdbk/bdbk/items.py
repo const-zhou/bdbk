@@ -26,12 +26,13 @@ class BdbkItem():
     name = str()
     description = str()
     section = []
-    image = str
+    image = str()
 
     def convert2Diction(self):
         dic = {}
         dic["name"] = self.name
         dic["description"] = self.description
+        dic["image"] = self.image
         itemlist = []
         for item in self.section:
             if isinstance(item, SectionItem):

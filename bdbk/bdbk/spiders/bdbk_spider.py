@@ -28,15 +28,6 @@ class BDBKSpider(scrapy.Spider):
     #         yield SplashRequest(url, self.parse, args={'wait': 0.5})
 
     def parse(self, response):
-        # for sel in response.xpath("//div[@class='lemma-summary']/div[@class='para']"):
-        # print response.body
-        # fo = open("html.txt", "wb")
-        # fo.write(response.body)
-        # fo.close()
-        # response = Selector(response)
-        # imgas = response.xpath("//img/@data-src").extract()
-        # print imgas
-
         flag = False 
         g_content = ''
         entity = BdbkItem()
@@ -56,15 +47,8 @@ class BDBKSpider(scrapy.Spider):
                 flag = True
                 sectionItem = SectionItem()
                 sectionItem['title'] = desc
-                # print sel
-                
-                # print 'title: ' + desc
                 g_content = ''
                 
-            
-            # sectionItem['image_urls'] = sel.xpath("img/@src")
-            # print sectionItem['image_urls']
-            # print sel
             myimg = sel.xpath("div/a/img/@data-src").extract()
             if len(myimg):  
                 print "###img:  " 
@@ -88,6 +72,9 @@ class BDBKSpider(scrapy.Spider):
             content = desc
             entity.name = name
             entity.description = desc
+        summary_pic = response.xpath("//div[@class='summary-pic']//img/@src").extract()
+        if len(summary_pic):
+            entity.image = summary_pic[0]
             # print name
             # print content
         
@@ -100,11 +87,3 @@ class BDBKSpider(scrapy.Spider):
         request_bdbk = urllib2.Request(url = 'http://127.0.0.1:8000/addfruit', data=json_str, headers=headers_bdbk)
         response = urllib2.urlopen(request_bdbk)
         # yield entity
-
-            # link = sel.xpath('a/@href').extract()
-            # desc = sel.xpath('text()').extract()
-            # print desc
-            # for gg in sel.xpath("*"):
-            #     info = gg.xpath('text()').extract()
-            #     for xx in info:
-            #         print xx
